@@ -1,8 +1,37 @@
 ## [Unreleased]
 
+### Breaking changes
+
+* Disable `return_scores` by default as most use cases do not use translation scores
+* [Python] Linux Python wheels published on PyPI now requires NVIDIA GPU driver >= 450.80.02 for GPU translation
+* [Python] Force translation options to be set with keyword arguments only (see the API reference)
+* [Python] Remove support for converting TensorFlow SavedModels: checkpoints should be converted instead
+* [Python] Remove `model_spec` argument from the `convert` method: if the converter is not able to automatically detect the model specification, this argument is moved to the converter constructor
+* [Python] Rename tokenization callables arguments for clarity:
+  * `tokenize_fn` to `source_tokenize_fn`
+  * `detokenize_fn` to `target_detokenize_fn`
+* [CLI] Rename length contraints options for consistency with other APIs:
+  * `max_sent_length` to `max_decoding_length`
+  * `min_sent_length` to `min_decoding_length`
+* [C++] Move `max_batch_size` and `batch_type` options from the `TranslationOptions` structure to the translation methods of `TranslatorPool`
+* [C++] Simplify `TranslationResult` structure with public attributes
+* [C++] Asynchronous translation API now returns one future per example instead of a single future for the batch
+* Remove support for NVIDIA GPU with Compute Capability < 3.5
+
+### Changes
+
+* Replace all Docker images by a single one: `latest-ubuntu20.04-cuda11.2`
+* Replace CMake option `LIB_ONLY` by `BUILD_CLI`
+* Require CMake version >= 3.15 for source compilation
+
 ### New features
 
+* Automatically detect the model specification when converting OpenNMT-py models
+
 ### Fixes and improvements
+
+* Use CUDA 11.2 in the Linux Python wheels to fix compatibility with NVIDIA Ampere GPUs
+* Update Thrust to 1.12.0
 
 ## [v1.20.1](https://github.com/OpenNMT/CTranslate2/releases/tag/v1.20.1) (2021-04-29)
 
